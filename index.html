@@ -20,6 +20,7 @@ function status(text) {
 }
 
 async function main() {
+  
   status('fetching...');
   
   const response = await fetch("https://api.github.com/user/repos?visibility=all&sort=updated&per_page=100&page=1", {
@@ -28,10 +29,11 @@ async function main() {
     },
     "method": "GET"
   });
-  
-  let loaded = 0;
 
   let respText = '';
+  
+  // @@debug
+  let loadedBytes = 0;
 
   const res = new Response(new ReadableStream({
     async start(controller) {
@@ -42,28 +44,29 @@ async function main() {
         
         if (!done) {
           
-          loaded += value.byteLength;
+          // @@debug
           
-          console.log('[update] loaded bytes:', loaded);
+          loadedBytes += value.byteLength;
           
-          status('loaded bytes: ' + loaded);
+          console.log('[update] loaded bytes:', loadedBytes);
+          
+          status('loaded bytes: ' + loadedBytes);
           
           
-          // should reparse entire string until last parse index and compare the changes
           const string = new TextDecoder().decode(value);
           
           respText += string;
           
           
           const { validData, lastValidIndex } = InvalidJSONParser.parse(respText);
-                    
-
+          
+          // @@todo compare the changes in validData and only add new data to DOM
+          
           
           // @@debug
 
           console.log('validData', validData, 'lastValidIndex', lastValidIndex);
 
-          
           const validDataArrLength = validData.length;
           
           const realDataArrSlice = realData.slice(0, validDataArrLength);
@@ -75,7 +78,6 @@ async function main() {
           
           console.log('doesDataMatch?', doesDataMatch);
 
-          
           
           controller.enqueue(value);
           
@@ -95,8 +97,6 @@ async function main() {
       controller.close();
     },
   }));
-  
-  console.warn('end!');
 
 }
 
