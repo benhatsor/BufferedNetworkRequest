@@ -1,5 +1,4 @@
-
-const realData = [{
+[{
     "id": 754534285,
     "node_id": "R_kgDOLPlHjQ",
     "name": "fetch-test",
@@ -67,7 +66,7 @@ const realData = [{
     "deployments_url": "https://api.github.com/repos/benhatsor/fetch-test/deployments",
     "created_at": "2024-02-08T09:05:55Z",
     "updated_at": "2024-02-08T17:19:00Z",
-    "pushed_at": "2024-02-08T17:43:53Z",
+    "pushed_at": "2024-02-08T17:46:54Z",
     "git_url": "git://github.com/benhatsor/fetch-test.git",
     "ssh_url": "git@github.com:benhatsor/fetch-test.git",
     "clone_url": "https://github.com/benhatsor/fetch-test.git",
