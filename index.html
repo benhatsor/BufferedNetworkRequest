@@ -27,7 +27,7 @@ function progress({loaded, total}) {
 }
 
 async function main() {
-  status('downloading...');
+  status('fetching...');
   
   const response = await fetch("https://api.github.com/user/repos?visibility=all&sort=updated&per_page=100&page=1", {
     "headers": {
@@ -47,13 +47,13 @@ async function main() {
         
         const {done, value} = await reader.read();
         
-        console.log('update. done:', done);
-        
         if (!done) {
           
           loaded += value.byteLength;
           
-          status('progress (bytes): ' + loaded);
+          console.log('[update] loaded (bytes):', loaded);
+          
+          status('loaded bytes: ' + loaded);
           
           
           // should reparse entire string until last parse index and compare the changes
@@ -63,11 +63,13 @@ async function main() {
           
           
           const { validData, lastValidIndex } = InvalidJSONParser.parse(respText);
-          
-          console.log('validData', validData, 'lastValidIndex', lastValidIndex);
-          
+                    
+
           
           // @@debug
+
+          console.log('validData', validData, 'lastValidIndex', lastValidIndex);
+
           
           const validDataArrLength = validData.length;
           
@@ -79,6 +81,7 @@ async function main() {
           const doesDataMatch = (realStr === validStr);
           
           console.log('doesDataMatch?', doesDataMatch);
+
           
           
           controller.enqueue(value);
@@ -89,6 +92,8 @@ async function main() {
   
           console.log('resp', resp);
           
+          status('done!');
+          
           break;
           
         }
@@ -98,7 +103,7 @@ async function main() {
     },
   }));
   
-  status('download completed');
+  console.warn('end!');
 
 }
 
