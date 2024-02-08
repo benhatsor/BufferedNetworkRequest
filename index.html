@@ -64,17 +64,26 @@ async function main() {
         
         respText += string;
         
-        if (done) break;
+        if (done) {
+          
+          console.log(respText);
+          
+          break;
+          
+        }
         
-        controller.enqueue(value);
+        //controller.enqueue(value);
       }
       controller.close();
     },
   }));
   
-  const resp = JSON.parse(respText);
+  //console.log('resp', respText);
+  //const resp = JSON.parse(respText);
   
-  console.log('completed', resp);
+  //const resp = respText;
+  
+  //console.log('completed', resp);
   
   status('download completed');
 
