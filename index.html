@@ -9,6 +9,8 @@ body {
 <img id="img" />
 
 
+<script src="invalidJSONparser.js"></script>
+
 <script>
 
 const elStatus = document.getElementById('status');
@@ -45,12 +47,15 @@ async function main() {
         if (done) break;
         loaded += value.byteLength;
         
-        status('progress (bytes):', loaded);
+        status('progress (bytes): ' + loaded);
         
         
+        // should reparse entire string until last parse index and compare the changes
         const string = new TextDecoder().decode(value);
         
-        console.log(string);
+        const { validData, lastValidIndex } = InvalidJSONParser.parse(string);
+        
+        console.log(respObj);
         
         
         //progress({loaded, total})
