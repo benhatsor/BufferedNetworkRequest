@@ -45,6 +45,7 @@ async function main() {
     async start(controller) {
       const reader = response.body.getReader();
       for (;;) {
+        
         const {done, value} = await reader.read();
         
         loaded += value.byteLength;
@@ -66,13 +67,16 @@ async function main() {
         
         if (done) {
           
+          console.log('a');
+          
           console.log('resp', respText);
           
           break;
           
         }
         
-        //controller.enqueue(value);
+        controller.enqueue(value);
+        
       }
       controller.close();
     },
