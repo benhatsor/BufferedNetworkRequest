@@ -107,15 +107,6 @@ async function main() {
               
               if (charStr1 !== charStr2) {
                 
-                let writeChar = charStr1;
-                
-                if (!charStr1) {
-                  
-                  writeChar = charStr2;
-                  
-                }
-                
-                
                 if (lastWriteIndex !== (i - 1)) {
                   
                   diffIndex++;
@@ -123,9 +114,9 @@ async function main() {
                 }
                 
                 
-                if (!diff[diffIndex]) diff[diffIndex] = '';
+                if (!diff[diffIndex]) diff[diffIndex] = [];
                 
-                diff[diffIndex] += writeChar;
+                diff[diffIndex].push([charStr1, charStr2]);
                 
                 
                 lastWriteIndex = i;
