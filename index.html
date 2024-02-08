@@ -52,11 +52,7 @@ async function main() {
         
         // should reparse entire string until last parse index and compare the changes
         const string = new TextDecoder().decode(value);
-        
-        console.log('@@@@@@@@@@@@@');
-        console.error(string);
-        console.log('@@@@@@@@@@@@@');
-        
+                
         const { validData, lastValidIndex } = InvalidJSONParser.parse(string);
         
         console.log(respObj);
