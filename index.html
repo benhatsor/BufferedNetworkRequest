@@ -62,11 +62,6 @@ async function main() {
           respText += string;
           
           
-          console.groupCollapsed('value');
-          console.log(string);
-          console.groupEnd();
-          
-          
           const { validData, lastValidIndex } = InvalidJSONParser.parse(respText);
           
           console.log('validData', validData, 'lastValidIndex', lastValidIndex);
@@ -76,10 +71,20 @@ async function main() {
           
           const validDataArrLength = validData.length;
           
-          const realDataArrSlice = realData.slice(0, (validDataArrLength - 1));
+          const realDataArrSlice = realData.slice(0, validDataArrLength);
           
           const realStr = JSON.stringify(realDataArrSlice),
                 validStr = JSON.stringify(validData);
+          
+          
+          console.groupCollapsed('realStr');
+          console.log(realStr);
+          console.groupEnd();
+          
+          console.groupCollapsed('validStr');
+          console.log(validStr);
+          console.groupEnd();          
+          
           
           const doesDataMatch = (realStr === validStr);
           
