@@ -9,9 +9,7 @@ class InvalidJSONParser {
     let lastValidIndex = 0;
     
     str.forEach(char => {
-      
-      const char = str[i];
-      
+            
       if (char === '{') {
         
         objNestingCounter++;
