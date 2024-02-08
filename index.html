@@ -78,11 +78,11 @@ async function main() {
           
           
           console.groupCollapsed('realStr');
-          console.log(parent.beautifier(realStr, parent.formatterOptions));
+          console.log(parent.beautifier.js(realStr, parent.formatterOptions));
           console.groupEnd();
           
           console.groupCollapsed('validStr');
-          console.log(parent.beautifier(validStr, parent.formatterOptions));
+          console.log(parent.beautifier.js(validStr, parent.formatterOptions));
           console.groupEnd();
           
           
