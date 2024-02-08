@@ -14,7 +14,8 @@ class InvalidJSONParser {
       
       if (char === '{') {
         
-        if (objNestingCounter === 0) {
+        if (objNestingCounter === 0 &&
+            i !== 0) {
           
           lastValidIndex = (i - 1);
           
