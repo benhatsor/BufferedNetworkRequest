@@ -4,7 +4,7 @@ body {
 }
 </style>
 
-<div id="status"><i>Repos</i></div>
+<div id="status"><h3>Repos</h3></div>
 
 
 <script src="InvalidJSONParser.js"></script>
@@ -43,6 +43,8 @@ async function bufferedNetworkRequest(request, updateCallback) {
           
         } else {
           
+          updateCallback(null, done);
+          
           // console.log('fetch successful!');
           
           break;
@@ -77,11 +79,24 @@ const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pus
 // @@debug
 let lastTime = performance.now();
 
+let firstLoadTime;
+
 let lastValidDataArrLength = 0;
 
-bufferedNetworkRequest(request, (validData) => {
+bufferedNetworkRequest(request, (validData, done) => {
 
-  // @@todo compare the changes in validData and only add new data to DOM
+  if (done) {
+    
+    const currTime = performance.now();
+    
+    const deltaTime = firstLoadTime - currTime;
+    
+    elStatus.innerHTML += '<h1>perf. improvement: -' + deltaTime + 'ms</b>';
+    
+    return;
+    
+  }
+  
   
   // validData can be null
   if (!validData) validData = [];
@@ -111,10 +126,17 @@ bufferedNetworkRequest(request, (validData) => {
   
   const currTime = performance.now();
   
+  if (!firstLoadTime) {
+    
+    firstLoadTime = currTime;
+    
+  }
+  
+  
   let deltaTime = currTime - lastTime;
   deltaTime = +deltaTime.toFixed(2);
   
-  elStatus.innerHTML += '<b>loaded +' + validData.length + ' result(s) in +' + deltaTime + 'ms</b>';
+  elStatus.innerHTML += '<b>loaded ' + validData.length + ' in +' + deltaTime + 'ms</b>';
   
   lastTime = performance.now();
   
