@@ -102,7 +102,7 @@ bufferedNetworkRequest(request, (validData) => {
   
   const deltaTime = currTime - lastTime;
   
-  elStatus.innerHTML += '<b>' + deltaTime.toFixed(2) + 'ms</b>';
+  elStatus.innerHTML += '<b>' + +deltaTime.toFixed(2) + 'ms</b>';
   
   lastTime = performance.now();
   
