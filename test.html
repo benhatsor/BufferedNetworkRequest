@@ -53,7 +53,7 @@ bufferedNetworkRequest(request, (validData, done) => {
     totalRequestTime = +totalRequestTime.toFixed(2);
     
     
-    statusEl.innerHTML += '<h3>done. (loaded '+ lastValidDataArrLength +' objects)</h3><h1>saved: ' + deltaPercent + '% ('+ deltaTime +'s of '+ totalRequestTime +'s)</h1>';
+    statusEl.innerHTML += '<h3>done. (loaded '+ lastValidDataArrLength +' objects)</h3><h1>time saved: ' + deltaPercent + '% ('+ deltaTime +'s of '+ totalRequestTime +'s)</h1>';
     
     
     document.body.scrollTo(0, document.body.scrollHeight);
