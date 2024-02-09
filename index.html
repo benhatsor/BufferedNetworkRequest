@@ -90,7 +90,7 @@ bufferedNetworkRequest(request, (validData, done) => {
     let deltaTime = firstLoadTime - currTime;
     deltaTime = +deltaTime.toFixed(2);
     
-    elStatus.innerHTML += '<h1>perf. delta: ' + deltaTime + 'ms ('+ lastValidDataArrLength +' objects)</b>';
+    elStatus.innerHTML += '<h1>perf. delta: ' + deltaTime + 'ms</h1><h3>('+ lastValidDataArrLength +' objects)</h3>';
     
     document.body.scrollTo(0, document.body.scrollHeight);
     
