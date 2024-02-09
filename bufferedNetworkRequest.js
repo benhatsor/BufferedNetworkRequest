@@ -22,7 +22,7 @@ async function bufferedNetworkRequest(request, updateCallback) {
           respText += string;
           
           
-          const validData = InvalidJSONParser.parse(respText);
+          const validData = this.InvalidJSONParser.parse(respText);
           
           updateCallback(validData);
           
