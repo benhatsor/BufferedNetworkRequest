@@ -4,7 +4,7 @@ body {
 }
 </style>
 
-<div id="status"></div>
+<div id="status">loading...</div>
 
 
 <script src="InvalidJSONParser.js"></script>
@@ -14,29 +14,18 @@ body {
 
 <script>
 
-const elStatus = document.getElementById('status');
-function status(text) {
-  elStatus.innerHTML = text;
-}
-
-async function bufferedNetworkRequest(updateCallback) {
+async function bufferedNetworkRequest(request, updateCallback) {
   
-  status('connecting to server...');
+  const response = await request;
   
-  console.log('fetch');
-  
-  const response = await fetch("https://api.github.com/user/repos?visibility=all&sort=updated&per_page=100&page=1", {
-    "headers": {
-      "authorization": "token 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"
-    },
-    "method": "GET"
-  });
-
   let respText = '';
-
+  
   const res = new Response(new ReadableStream({
+    
     async start(controller) {
+      
       const reader = response.body.getReader();
+      
       for (;;) {
         
         const {done, value} = await reader.read();
@@ -50,50 +39,74 @@ async function bufferedNetworkRequest(updateCallback) {
           
           const validData = InvalidJSONParser.parse(respText);
           
-          // @@todo compare the changes in validData and only add new data to DOM
-          
-          // @@note validData can be null
-          
-          
-          updateCallback(validData, value);
+          updateCallback(validData);
           
         } else {
           
-          /*
-          const resp = JSON.parse(respText);
-  
-          console.log('fetch successful. resp:', resp);
-          
-          status('fetch successful!');
-          */
+          // console.log('fetch successful!');
           
           break;
           
         }
         
       }
+      
       controller.close();
-    },
+      
+    }
+    
   }));
 
 }
 
 
+// demo
 
-// @@debug
-let loadedBytes = 0;
+const elStatus = document.getElementById('status');
 
-bufferedNetworkRequest((validData, rawValue) => {
 
+const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
+  headers: {
+    authorization: 'token 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'
+  },
+  method: 'GET'
+});
+
+
+bufferedNetworkRequest(request, (validData) => {
+
+  // @@todo compare the changes in validData and only add new data to DOM
+  
+  // validData can be null
+  if (!validData) validData = [];
+  
+  
+  let out = '';
+
+  validData.forEach(item => {
+
+    out += '<p>' + item.name + '</p>';
+    
+  });
+  
+  elStatus.innerHTML = out;
+  
+  
   // @@debug
+  debugLogs(validData);
+  
+});
+
+
+
+
+
+
+  
+// @@debug
+function debugLogs() {
   
   console.group('update');
-  
-  loadedBytes += rawValue.byteLength;
-  
-  status('loaded bytes: ' + loadedBytes);
-  
-  // @@debug
 
   console.log('validData', validData);
 
@@ -110,6 +123,6 @@ bufferedNetworkRequest((validData, rawValue) => {
 
   console.groupEnd('update');
   
-});
+}
 
 </script>
