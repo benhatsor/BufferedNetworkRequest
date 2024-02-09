@@ -86,10 +86,12 @@ bufferedNetworkRequest(request, (validData) => {
   if (!validData) validData = [];
   
   
+  const validDataLen = validData.length;
+  
   // only add new data to DOM
   validData = validData.slice(lastValidDataArrLength);
   
-  lastValidDataArrLength = validData.length;
+  lastValidDataArrLength = validDataLen;
   
   
   let out = '';
