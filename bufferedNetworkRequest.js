@@ -7,7 +7,7 @@ async function bufferedNetworkRequest(request, updateCallback) {
   
   const res = new Response(new ReadableStream({
     
-    start: async (controller) => {
+    async start(controller) {
       
       const reader = response.body.getReader();
       
@@ -22,9 +22,9 @@ async function bufferedNetworkRequest(request, updateCallback) {
           respText += string;
           
           
-          debugger;
+          const parser = bufferedNetworkRequest.InvalidJSONParser;
           
-          const validData = this.InvalidJSONParser.parse(respText);
+          const validData = parser.parse(respText);
           
           updateCallback(validData);
           
