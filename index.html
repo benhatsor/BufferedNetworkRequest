@@ -75,7 +75,9 @@ const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pus
 
 
 // @@debug
-let lastTime = performance.now();
+const startTime = performance.now();
+
+let lastTime = startTime;
 
 let firstLoadTime;
 
@@ -87,10 +89,12 @@ bufferedNetworkRequest(request, (validData, done) => {
     
     const currTime = performance.now();
     
-    let deltaTime = firstLoadTime - currTime;
-    deltaTime = +deltaTime.toFixed(2);
+    const deltaTime = firstLoadTime - startTime;
     
-    const deltaPercent = percentage(deltaTime, currTime);
+    const totalRequestTime = currTime - startTime;
+    
+    const deltaPercent = percentage(deltaTime, totalRequestTime);
+    deltaPercent = +deltaPercent.toFixed(2);
     
     elStatus.innerHTML += '<h3>done. (loaded '+ lastValidDataArrLength +' objects)</h3><h1>perf. delta: ' + deltaTime + '%</h1>';
     
