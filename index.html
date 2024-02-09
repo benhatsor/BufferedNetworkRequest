@@ -3,9 +3,13 @@
 body {
   font-family: system-ui;
 }
+
+.status.loading {
+  color: #1a73e8;
+}
 </style>
 
-<div id="status"><h5>Fetching...</h5></div>
+<div class="status"><h5>Repositories</h5></div>
 
 
 <script src="bufferedNetworkRequest.js"></script>
@@ -13,7 +17,10 @@ body {
 
 <script>
 
-const elStatus = document.getElementById('status');
+const statusEl = document.querySelector('.status');
+
+
+statusEl.classList.add('loading');
 
 
 const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
@@ -24,45 +31,27 @@ const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pus
 });
 
 
-// @@debug
-const startTime = performance.now();
-let lastTime = startTime;
-let firstLoadTime;
-
-let lastValidDataArrLength = 0;
+let lastDataLen = 0;
 
 bufferedNetworkRequest(request, (validData, done) => {
-
+  
   if (done) {
     
-    const currTime = performance.now();
-    
-    const deltaTime = firstLoadTime - startTime;
-    
-    const totalRequestTime = currTime - startTime;
-    
-    let deltaPercent = 100 - percentage(deltaTime, totalRequestTime);
-    deltaPercent = +deltaPercent.toFixed(2);
-    
-    elStatus.innerHTML += '<h3>done. (loaded '+ lastValidDataArrLength +' objects)</h3><h1>perf. delta: ' + deltaPercent + '%</h1>';
-    
-    document.body.scrollTo(0, document.body.scrollHeight);
+    statusEl.classList.remove('loading');
     
     return;
     
   }
   
   
-  // validData can be null
   if (!validData) validData = [];
-  
   
   const validDataLen = validData.length;
   
-  // only add new data to DOM
-  validData = validData.slice(lastValidDataArrLength);
+  // remove already-received data
+  validData = validData.slice(lastDataLen);
   
-  lastValidDataArrLength = validDataLen;
+  lastDataLen = validDataLen;
   
   
   let out = '';
@@ -73,37 +62,9 @@ bufferedNetworkRequest(request, (validData, done) => {
     
   });
   
-  elStatus.innerHTML += out;
-  
-  
-  
-  // @@debug
-  
-  const currTime = performance.now();
-  
-  if (!firstLoadTime) {
-    
-    firstLoadTime = currTime;
-    
-  }
-  
-  
-  let deltaTime = currTime - lastTime;
-  deltaTime = +deltaTime.toFixed(2);
-  
-  elStatus.innerHTML += '<h2>loaded ' + validData.length + ' in +' + deltaTime + 'ms</h2>';
-  
-  lastTime = performance.now();
-    
-  
-  document.body.scrollTo(0, document.body.scrollHeight);
+  statusEl.innerHTML += out;
   
 });
-
-
-function percentage(partialValue, totalValue) {
-   return (100 * partialValue) / totalValue;
-}
 
 </script>
 
