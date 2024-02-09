@@ -76,12 +76,20 @@ const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pus
 // @@debug
 let lastTime = performance.now();
 
+let lastValidDataArrLength = 0;
+
 bufferedNetworkRequest(request, (validData) => {
 
   // @@todo compare the changes in validData and only add new data to DOM
   
   // validData can be null
   if (!validData) validData = [];
+  
+  
+  // only add new data to DOM
+  validData = validData.slice(lastValidDataArrLength);
+  
+  lastValidDataArrLength = validData.length;
   
   
   let out = '';
@@ -92,7 +100,7 @@ bufferedNetworkRequest(request, (validData) => {
     
   });
   
-  elStatus.innerHTML = out;
+  elStatus.innerHTML += out;
   
   
   
