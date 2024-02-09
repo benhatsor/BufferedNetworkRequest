@@ -92,7 +92,7 @@ bufferedNetworkRequest(request, (validData, done) => {
     
     elStatus.innerHTML += '<h1>perf. delta: ' + deltaTime + 'ms</b>';
     
-    document.body.scrollY = document.body.scrollHeight;
+    document.body.scrollTo(0, document.body.scrollHeight);
     
     return;
     
@@ -145,7 +145,7 @@ bufferedNetworkRequest(request, (validData, done) => {
   debugLogs(validData);
   
   
-  document.body.scrollY = document.body.scrollHeight;
+  document.body.scrollTo(0, document.body.scrollHeight);
   
 });
 
