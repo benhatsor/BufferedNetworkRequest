@@ -1,7 +1,7 @@
 
 // gets valid data from invalid JSON
 
-class InvalidJSONParser {
+bufferedNetworkRequest.InvalidJSONParser = new class {
   
   parse(str) {
     
@@ -78,6 +78,4 @@ class InvalidJSONParser {
   }
   
 }
-
-InvalidJSONParser = new InvalidJSONParser();
 
