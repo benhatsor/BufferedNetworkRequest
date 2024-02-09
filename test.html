@@ -1,2 +1,105 @@
 
-
+<style>
+body {
+  font-family: system-ui;
+}
+</style>
+
+<div class="status"><h5>Fetching...</h5></div>
+
+
+<script src="bufferedNetworkRequest.js"></script>
+<script src="InvalidJSONParser.js"></script>
+
+<script>
+
+const statusEl = document.querySelector('.status');
+
+
+const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
+  headers: {
+    authorization: 'token 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'
+  },
+  method: 'GET'
+});
+
+
+const startTime = performance.now();
+let lastTime = startTime;
+let firstLoadTime;
+
+let lastValidDataArrLength = 0;
+
+bufferedNetworkRequest(request, (validData, done) => {
+
+  if (done) {
+    
+    const currTime = performance.now();
+    
+    const deltaTime = firstLoadTime - startTime;
+    
+    const totalRequestTime = currTime - startTime;
+    
+    let deltaPercent = 100 - percentage(deltaTime, totalRequestTime);
+    deltaPercent = +deltaPercent.toFixed(2);
+    
+    statusEl.innerHTML += '<h3>done. (loaded '+ lastValidDataArrLength +' objects)</h3><h1>perf. delta: ' + deltaPercent + '%</h1>';
+    
+    document.body.scrollTo(0, document.body.scrollHeight);
+    
+    return;
+    
+  }
+  
+  
+  // validData can be null
+  if (!validData) validData = [];
+  
+  
+  const validDataLen = validData.length;
+  
+  // only add new data to DOM
+  validData = validData.slice(lastValidDataArrLength);
+  
+  lastValidDataArrLength = validDataLen;
+  
+  
+  let out = '';
+
+  validData.forEach(item => {
+
+    out += '<p>' + item.name + '</p>';
+    
+  });
+  
+  statusEl.innerHTML += out;
+  
+  
+  const currTime = performance.now();
+  
+  if (!firstLoadTime) {
+    
+    firstLoadTime = currTime;
+    
+  }
+  
+  
+  let deltaTime = currTime - lastTime;
+  deltaTime = +deltaTime.toFixed(2);
+  
+  statusEl.innerHTML += '<h2>loaded ' + validData.length + ' in +' + deltaTime + 'ms</h2>';
+  
+  lastTime = performance.now();
+    
+  
+  document.body.scrollTo(0, document.body.scrollHeight);
+  
+});
+
+
+function percentage(partialValue, totalValue) {
+   return (100 * partialValue) / totalValue;
+}
+
+</script>
+
