@@ -13,7 +13,7 @@ body {
 <div class="status"><h2>Repositories</h2></div>
 
 
-<script src="bufferedNetworkRequest.js"></script>
+<script src="BufferedNetworkRequest.js"></script>
 <script src="InvalidJSONParser.js"></script>
 
 <script>
@@ -35,7 +35,7 @@ const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pus
 
 let lastDataLen = 0;
 
-bufferedNetworkRequest(request, (validData, done) => {
+BufferedNetworkRequest(request, (validData, done) => {
   
   if (done) {
     
