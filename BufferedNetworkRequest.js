@@ -1,5 +1,5 @@
 
-async function bufferedNetworkRequest(request, updateCallback) {
+async function BufferedNetworkRequest(request, updateCallback) {
   
   const response = await request;
   
@@ -30,7 +30,7 @@ async function bufferedNetworkRequest(request, updateCallback) {
         respText += string;
         
         
-        const parser = bufferedNetworkRequest.InvalidJSONParser;
+        const parser = BufferedNetworkRequest.InvalidJSONParser;
         
         const validData = parser.parse(respText);
         
