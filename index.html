@@ -21,39 +21,45 @@ body {
 const statusEl = document.querySelector('.status');
 
 
-statusEl.classList.add('loading');
-
-
-let request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
-  headers: {
-    authorization: 'token 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'
-  },
-  cache: 'no-store',
-  method: 'GET'
-});
-
-
-request = BufferedNetworkRequest(request, { json: true });
-
-request.onupdate = (data) => {
+async function main() {
   
-  let out = '';
-
-  data.forEach(item => {
-
-    out += '<p>' + item.name + '</p>';
-    
+  statusEl.classList.add('loading');
+  
+  
+  let request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
+    headers: {
+      authorization: 'token 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'
+    },
+    cache: 'no-store',
+    method: 'GET'
   });
   
-  statusEl.innerHTML += out;
   
-};
+  request = await BufferedNetworkRequest(request, { json: true });
+    
+  request.onupdate = (data) => {
+    
+    let out = '';
+  
+    data.forEach(item => {
+  
+      out += '<p>' + item.name + '</p>';
+      
+    });
+    
+    statusEl.innerHTML += out;
+    
+  };
+  
+  request.ondone = () => {
+    
+    statusEl.classList.remove('loading');
+    
+  };
+  
+}
 
-request.ondone = () => {
-  
-  statusEl.classList.remove('loading');
-  
-};
+main();
 
 </script>
 
