@@ -10,7 +10,7 @@ Significantly faster time-to-first-update for network requests. **~30% time save
 ```JS
 const request = await BufferedNetworkRequest(fetchRequest, options);
 
-request.onupdate = (newData) => {};
+request.onupdate = (data) => {};
 request.ondone = (resp) => {};
 ```
 
