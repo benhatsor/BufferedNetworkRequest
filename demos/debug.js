@@ -4,16 +4,17 @@ const statusEl = document.querySelector('.status');
 
 async function main() {
   
-  let request = fetch('https://api.github.com/users/github/repos?per_page=100', {
-    cache: 'no-store'
-  });
-  
-  
   const startTime = performance.now();
   let lastTime = startTime;
   let firstLoadTime;
+  
+  
+  let request = fetch('https://api.github.com/users/github/repos?per_page=100', {
+    cache: 'no-store'
+  });
     
   request = await BufferedNetworkRequest(request, { json: true });
+  
   
   request.onupdate = (validData) => {
     
