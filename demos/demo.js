@@ -25,6 +25,9 @@ async function main() {
     
     statusEl.innerHTML += out;
     
+    
+    scrollToBottom();
+    
   };
   
   request.ondone = () => {
@@ -36,4 +39,12 @@ async function main() {
 }
 
 main();
+
+
+
+function scrollToBottom() {
+  
+  document.body.scrollTo(0, document.body.scrollHeight);
+  
+}
 
