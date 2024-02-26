@@ -12,7 +12,6 @@ async function main() {
   
   request = await BufferedNetworkRequest(request, { json: true });
   
-  
   request.onupdate = (data) => {
     
     let out = '';
