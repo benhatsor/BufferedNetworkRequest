@@ -1,4 +1,8 @@
 
+/*
+ * BufferedNetworkRequest
+ */
+
 async function BufferedNetworkRequest(request, options = {}) {
   
   const response = await request;
