@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "https://cde.run/benhatsor/bufferednetworkrequest/README.md",
+      "destination": "https://cde.run/benhatsor/BufferedNetworkRequest/README.md",
       "permanent": true
     }
   ]
