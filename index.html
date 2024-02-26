@@ -24,7 +24,7 @@ const statusEl = document.querySelector('.status');
 statusEl.classList.add('loading');
 
 
-const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
+let request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
   headers: {
     authorization: 'token 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'
   },
@@ -33,9 +33,9 @@ const request = fetch('https://api.github.com/user/repos?visibility=all&sort=pus
 });
 
 
-const bRequest = BufferedNetworkRequest(request, { json: true });
+request = BufferedNetworkRequest(request, { json: true });
 
-bRequest.onupdate = (data) => {
+request.onupdate = (data) => {
   
   let out = '';
 
@@ -49,7 +49,7 @@ bRequest.onupdate = (data) => {
   
 };
 
-bRequest.ondone = () => {
+request.ondone = () => {
   
   statusEl.classList.remove('loading');
   
