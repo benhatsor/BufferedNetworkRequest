@@ -97,7 +97,7 @@ async function BufferedNetworkRequest(request, options = {}) {
   }
   
   
-  return {
+  const eventObj = {
     
     set onupdate(value) {
       
@@ -112,6 +112,8 @@ async function BufferedNetworkRequest(request, options = {}) {
     }
     
   };
+  
+  return eventObj;
 
 }
 
