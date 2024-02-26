@@ -1,5 +1,8 @@
 
-// gets valid data from invalid JSON
+/*
+ * InvalidJSONParser
+ * Gets valid data from invalid JSON
+ */
 
 BufferedNetworkRequest.InvalidJSONParser = new class {
   
