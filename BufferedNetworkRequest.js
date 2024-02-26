@@ -1,4 +1,19 @@
 
+/*
+ * BufferedNetworkRequest
+ *
+ * Usage:
+ *
+ * const request = await BufferedNetworkRequest(fetchRequest, options);
+ *
+ * request.onupdate = (newData) => {}
+ * request.ondone = (resp) => {}
+ *
+ * Options:
+ * - json [boolean]: parse response data as a JSON array. false by default.
+ *
+ */
+
 async function BufferedNetworkRequest(request, options = {}) {
   
   const response = await request;
@@ -41,6 +56,7 @@ async function BufferedNetworkRequest(request, options = {}) {
   }));
   
   
+  // lastValidDataArrLength
   let lastDataLen = 0;
   
   function parseInvalidJSON(data) {
