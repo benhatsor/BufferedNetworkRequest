@@ -46,7 +46,7 @@ async function main() {
     lastTime = performance.now();
       
     
-    document.body.scrollTo(0, document.body.scrollHeight);
+    scrollToBottom();
     
   };
   
@@ -74,7 +74,7 @@ async function main() {
     statusEl.innerHTML += '<h3>done. (loaded '+ resp.length +' objects)</h3><h1>time saved: ' + deltaPercent + '% ('+ deltaTime +'s of '+ totalRequestTime +'s)</h1>';
     
     
-    document.body.scrollTo(0, document.body.scrollHeight);
+    scrollToBottom();
     
   };
   
@@ -83,7 +83,14 @@ async function main() {
 main();
 
 
+
 function percentage(partialValue, totalValue) {
    return (100 * partialValue) / totalValue;
+}
+
+function scrollToBottom() {
+  
+  document.body.scrollTo(0, document.body.scrollHeight);
+  
 }
 
