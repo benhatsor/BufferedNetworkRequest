@@ -4,12 +4,8 @@ const statusEl = document.querySelector('.status');
 
 async function main() {
   
-  let request = fetch('https://api.github.com/user/repos?visibility=all&sort=pushed&per_page=100&page=1', {
-    headers: {
-      authorization: 'token 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'
-    },
-    cache: 'no-store',
-    method: 'GET'
+  let request = fetch('https://api.github.com/users/github/repos?per_page=100', {
+    cache: 'no-store'
   });
   
   
