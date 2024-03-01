@@ -8,6 +8,8 @@ Significantly faster time-to-first-update for network requests. **~30% time save
 ## Usage
 
 ```JS
+const fetchRequest = fetch(url);
+
 const request = await BufferedNetworkRequest(fetchRequest, options);
 
 request.onupdate = (data) => {};
