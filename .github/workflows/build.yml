@@ -10,7 +10,7 @@ on:
     paths:
       - 'src/**.js'
       - 'src/.scriptorder'
-      - 'build.js'
+      - './build.js'
       
   workflow_dispatch:
 
