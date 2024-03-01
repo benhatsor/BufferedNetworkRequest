@@ -5,6 +5,14 @@ Significantly faster time-to-first-update for network requests. **~30% time save
 - [Demo](https://bufferednetworkrequest.vercel.app/demos/demo)
 - [Debug](https://bufferednetworkrequest.vercel.app/demos/debug)
 
+## Setup
+
+Put this HTML in your `<body>`:
+
+```HTML
+<script src="dist/BufferedNetworkRequest.js"></script>
+```
+
 ## Usage
 
 ```JS
