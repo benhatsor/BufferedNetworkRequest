@@ -8,6 +8,8 @@ async function main() {
   let lastTime = startTime;
   let firstLoadTime;
   
+  let itemsLoaded = 0;
+  
   
   let request = fetch('https://api.github.com/users/github/repos?per_page=100', {
     cache: 'no-store'
@@ -17,6 +19,9 @@ async function main() {
   
   
   request.onupdate = (validData) => {
+    
+    itemsLoaded += validData.length;
+    
     
     let out = '';
   
@@ -50,7 +55,7 @@ async function main() {
     
   };
   
-  request.ondone = (resp) => {
+  request.ondone = (response) => {
     
     const currTime = performance.now();
     
@@ -71,10 +76,13 @@ async function main() {
     totalRequestTime = +totalRequestTime.toFixed(2);
     
     
-    statusEl.innerHTML += '<h3>done. (loaded '+ resp.length +' objects)</h3><h1>time saved: ' + deltaPercent + '% ('+ deltaTime +'s of '+ totalRequestTime +'s)</h1>';
+    statusEl.innerHTML += '<h3>done. (loaded '+ itemsLoaded +' objects)</h3><h1>time saved: ' + deltaPercent + '% ('+ deltaTime +'s of '+ totalRequestTime +'s)</h1>';
     
     
     scrollToBottom();
+    
+    
+    console.log('[done] response', response);
     
   };
   
