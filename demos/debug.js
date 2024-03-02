@@ -18,7 +18,7 @@ async function main() {
   request = await BufferedNetworkRequest(request, { json: true });
   
   
-  request.onupdate = (validData) => {
+  request.ondata = (validData) => {
     
     itemsLoaded += validData.length;
     
