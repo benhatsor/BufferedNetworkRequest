@@ -20,7 +20,7 @@ const fetchRequest = fetch(url);
 
 const request = await BufferedNetworkRequest(fetchRequest, options);
 
-request.onupdate = (data) => {};
+request.ondata = (data) => {};
 request.ondone = (response, data) => {};
 ```
 
