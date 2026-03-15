@@ -1,5 +1,5 @@
 /**
- * A generic interface for streaming processed text chunks from a Response.
+ * A generic interface for streaming processed text chunks from a `Response`.
  */
 class TextStreamInterface {
     #stream;
@@ -17,7 +17,7 @@ class TextStreamInterface {
     }
 }
 /**
- * Stream text chunks from a Response.
+ * Stream text chunks from a `Response`.
  */
 class TextStream extends TextStreamInterface {
     processChunk(chunk) {
@@ -81,7 +81,7 @@ class InvalidJSONParser {
 var InvalidJSONParser$1 = new InvalidJSONParser();
 
 /**
- * Stream JSON objects in chunks from a Response.
+ * Stream JSON objects in chunks from a `Response`.
  */
 class JSONObjectStream extends TextStreamInterface {
     #fullJSONStr = '';

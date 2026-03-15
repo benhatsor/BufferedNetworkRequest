@@ -1,5 +1,5 @@
 /**
- * A generic interface for streaming processed text chunks from a Response.
+ * A generic interface for streaming processed text chunks from a `Response`.
  */
 declare abstract class TextStreamInterface<ChunkType> {
     #private;
@@ -8,7 +8,7 @@ declare abstract class TextStreamInterface<ChunkType> {
     abstract processChunk(chunk: string): ChunkType | null;
 }
 /**
- * Stream text chunks from a Response.
+ * Stream text chunks from a `Response`.
  */
 declare class TextStream extends TextStreamInterface<string> {
     processChunk(chunk: string): string;
@@ -24,7 +24,7 @@ declare class InvalidJSONParser {
 declare const _default: InvalidJSONParser;
 
 /**
- * Stream JSON objects in chunks from a Response.
+ * Stream JSON objects in chunks from a `Response`.
  */
 declare class JSONObjectStream extends TextStreamInterface<ValidJSONObjects> {
     #private;
