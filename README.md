@@ -20,8 +20,8 @@ import { TextStream } from 'bufferednetworkrequest'
 
 const response = await fetch(url)
 
-if (!response.ok) throw Error(`Request failed: ${response.status}`)
-if (!response.body) throw Error(`Response is empty.`)
+if (!response.ok) throw Error(`Request failed: Code ${response.status}`)
+if (!response.body) throw Error(`Response was empty.`)
 
 const stream = new TextStream(response.body)
 
@@ -42,8 +42,8 @@ import { JSONObjectStream } from 'bufferednetworkrequest'
 
 const response = await fetch('https://jsonplaceholder.typicode.com/todos')
 
-if (!response.ok) throw Error(`Request failed: ${response.status}`)
-if (!response.body) throw Error(`Response is empty.`)
+if (!response.ok) throw Error(`Request failed: Code ${response.status}`)
+if (!response.body) throw Error(`Response was empty.`)
 
 const stream = new JSONObjectStream(response.body)
 

@@ -1,5 +1,5 @@
 
-export type ValidJSONObjects = object[];
+export type ValidJSONObjects = object[]
 
 /**
  * Gets valid objects in invalid JSON.
