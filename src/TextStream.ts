@@ -17,7 +17,7 @@ export abstract class TextStreamInterface<ChunkType> {
 
     }
 
-    async * [Symbol.asyncIterator]() {
+    async *[Symbol.asyncIterator]() {
 
         for await (const chunk of this.#stream) {
 
