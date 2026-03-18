@@ -70,9 +70,9 @@ console.log(text)
 
 The library uses the [Web Streams API][2]. `TextStreamInterface<ChunkType>` is an abstract base class that pipes a `Response.body` through a `TextDecoderStream` and exposes an async iterator. Subclasses implement `processChunk()` to transform each text chunk:
 
-- **TextStream** — Returns raw text chunks as-is
-- **JSONObjectStream** — Accumulates chunks into a JSON string, uses `InvalidJSONParser` to extract complete objects, and yields only newly-completed objects (no duplicates across iterations)
-- **InvalidJSONParser** — Parses incomplete/truncated JSON by tracking brace nesting to find the last fully-closed object, and auto-closing unclosed top-level arrays
+- [**TextStream**](src/TextStream.ts) — Returns raw text chunks as-is
+- [**JSONObjectStream**](src/JSONObjectStream.ts) — Accumulates chunks into a JSON string, uses `InvalidJSONParser` to extract complete objects, and yields only newly-completed objects (no duplicates across iterations)
+- [**InvalidJSONParser**](src/InvalidJSONParser.ts) — Parses incomplete/truncated JSON by tracking brace nesting to find the last fully-closed object, and auto-closing unclosed top-level arrays
 
 ## Developing
 
