@@ -5,7 +5,7 @@ import { JSONObjectStream } from 'bufferednetworkrequest'
 const statusEl = document.querySelector('.status')!
 
 
-const response = await fetch('https://jsonplaceholder.typicode.com/comments', {
+const response = await fetch('https://jsonplaceholder.typicode.com/photos', {
     cache: 'no-store'
 })
 

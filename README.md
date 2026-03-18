@@ -27,7 +27,7 @@ import * as BufferedNetworkRequest from 'https://unpkg.com/bufferednetworkreques
 ```js
 import { JSONObjectStream } from 'bufferednetworkrequest'
 
-const response = await fetch('https://jsonplaceholder.typicode.com/comments')
+const response = await fetch('https://jsonplaceholder.typicode.com/photos')
 
 if (!response.ok) throw Error(`Request failed: Code ${response.status}`)
 if (!response.body) throw Error(`Response was empty.`)
