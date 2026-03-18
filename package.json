@@ -2,7 +2,7 @@
   "name": "bufferednetworkrequest",
   "type": "module",
   "version": "1.0.0",
-  "description": "Significantly faster time-to-first-update for network requests.",
+  "description": "Stream JSON and text requests as they arrive.",
   "author": "benhatsor",
   "license": "MIT",
   "homepage": "https://github.com/benhatsor/BufferedNetworkRequest#readme",
@@ -36,7 +36,8 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build",
-    "demos:build": "tsdown --config demos/tsdown.config.ts"
+    "demos:build": "tsdown --config demos/tsdown.config.ts",
+    "demos:dev": "tsdown --config demos/tsdown.config.ts --watch"
   },
   "devDependencies": {
     "@vitest/browser-playwright": "^4.1.0",

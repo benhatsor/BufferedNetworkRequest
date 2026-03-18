@@ -6,17 +6,17 @@ export default defineConfig({
     projects: [
       {
         test: {
-          name: 'node',
-          environment: 'node',
-        },
-      },
-      {
-        test: {
           name: 'browser',
           browser: {
             provider: playwright(),
             instances: [{ browser: 'chromium' }],
           },
+        },
+      },
+      {
+        test: {
+          name: 'node',
+          environment: 'node',
         },
       },
     ],
