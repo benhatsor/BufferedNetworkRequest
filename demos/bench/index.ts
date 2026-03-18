@@ -10,7 +10,7 @@ let prevTime = startTime
 let firstLoadTime: number | null = null
 
 
-const response = await fetch('https://jsonplaceholder.typicode.com/comments', {
+const response = await fetch('https://jsonplaceholder.typicode.com/photos', {
     cache: 'no-store'
 })
 
