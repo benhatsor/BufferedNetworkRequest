@@ -24,7 +24,13 @@ export abstract class TextStreamInterface<ChunkType> {
 
     async *[Symbol.asyncIterator]() {
 
-        for await (const chunk of this.stream) {
+        const asyncIteratorSupported = Symbol.asyncIterator in this.stream
+
+        const asyncIterableStream = asyncIteratorSupported ?
+            this.stream :
+            this.polyfillReadableStreamAsyncIterator(this.stream)
+
+        for await (const chunk of asyncIterableStream) {
 
             const processedChunk = this.processChunk(chunk)
 
@@ -37,7 +43,38 @@ export abstract class TextStreamInterface<ChunkType> {
     }
 
     /** Process the chunk. Return `null` to skip it. */
-    abstract processChunk(chunk: string): ChunkType | null
+    protected abstract processChunk(chunk: string): ChunkType | null
+
+    /**
+     * Polyfill `ReadableStream`'s async iterator for Safari.
+     * @see https://caniuse.com/wf-async-iterable-streams
+     */
+    private polyfillReadableStreamAsyncIterator(stream: ReadableStream<string>) {
+
+        return {
+
+            async *[Symbol.asyncIterator](): ReadableStreamAsyncIterator<string> {
+
+                const reader = stream.getReader()
+
+                let result: ReadableStreamReadResult<string>
+
+                while (
+                    result = await reader.read(),
+                    !result.done
+                ) {
+
+                    const chunk = result.value
+
+                    yield chunk
+
+                }
+
+            }
+
+        }
+
+    }
 
 }
 
@@ -47,7 +84,7 @@ export abstract class TextStreamInterface<ChunkType> {
  */
 export class TextStream extends TextStreamInterface<string> {
 
-    processChunk(chunk: string) {
+    protected processChunk(chunk: string) {
         return chunk
     }
 

@@ -8,6 +8,7 @@ function getDemoConfig(demoDir: string): UserConfig {
     platform: 'browser',
     dts: false,
     sourcemap: true,
+    clean: true,
     deps: { neverBundle: ['bufferednetworkrequest'] }
   }
 }

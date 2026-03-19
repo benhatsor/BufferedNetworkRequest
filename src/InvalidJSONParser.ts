@@ -95,4 +95,3 @@ class InvalidJSONParser {
 }
 
 export default new InvalidJSONParser()
-export type { InvalidJSONParser }

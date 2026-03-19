@@ -78,12 +78,12 @@ The library uses the [Web Streams API][2]. `TextStreamInterface<ChunkType>` is a
 
 ```sh
 npm install
-npm run test
+npm run build
 ```
 
 Then:
 ```sh
-npm run build
+npm run test
 ```
 
 ## License

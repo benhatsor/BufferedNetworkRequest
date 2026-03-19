@@ -1,7 +1,7 @@
 
 import { expect, test } from 'vitest'
 import { createReadableStream } from './createReadableStream'
-import { TextStream } from '../src'
+import { TextStream } from '../dist'
 
 
 // --- TextStream ---

@@ -39,7 +39,8 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:dev": "vitest",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build",
     "demos:build": "tsdown --config demos/tsdown.config.ts",

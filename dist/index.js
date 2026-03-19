@@ -17,11 +17,23 @@ var TextStreamInterface = class {
 		this.stream = respBody.pipeThrough(textDecoderStream);
 	}
 	async *[Symbol.asyncIterator]() {
-		for await (const chunk of this.stream) {
+		const asyncIterableStream = Symbol.asyncIterator in this.stream ? this.stream : this.polyfillReadableStreamAsyncIterator(this.stream);
+		for await (const chunk of asyncIterableStream) {
 			const processedChunk = this.processChunk(chunk);
 			if (processedChunk === null) continue;
 			yield processedChunk;
 		}
+	}
+	/**
+	* Polyfill `ReadableStream`'s async iterator for Safari.
+	* @see https://caniuse.com/wf-async-iterable-streams
+	*/
+	polyfillReadableStreamAsyncIterator(stream) {
+		return { async *[Symbol.asyncIterator]() {
+			const reader = stream.getReader();
+			let result;
+			while (result = await reader.read(), !result.done) yield result.value;
+		} };
 	}
 };
 /**
