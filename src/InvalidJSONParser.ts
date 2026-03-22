@@ -11,9 +11,28 @@ class InvalidJSONParser {
         let objNestingCounter = 0
         let lastValidIndex = 0
 
+        let inString = false
+
         for (let i = 0; i < jsonStr.length; i++) {
 
             const char = jsonStr[i]
+            
+
+            // skip escaped characters inside strings
+            if (inString && char === '\\') {
+                i++
+                continue
+            }
+
+            // toggle string tracking on unescaped quotes
+            if (char === '"') {
+                inString = !inString
+                continue
+            }
+
+            // only count braces outside of strings
+            if (inString) { continue }
+
 
             // if opening a new object
             if (char === '{') {
@@ -30,9 +49,7 @@ class InvalidJSONParser {
 
                 objNestingCounter++
 
-            }
-
-            if (char === '}') {
+            } else if (char === '}') { // if closing an object
 
                 objNestingCounter--
 

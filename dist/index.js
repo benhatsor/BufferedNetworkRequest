@@ -53,13 +53,22 @@ var InvalidJSONParser = class {
 	parse(jsonStr) {
 		let objNestingCounter = 0;
 		let lastValidIndex = 0;
+		let inString = false;
 		for (let i = 0; i < jsonStr.length; i++) {
 			const char = jsonStr[i];
+			if (inString && char === "\\") {
+				i++;
+				continue;
+			}
+			if (char === "\"") {
+				inString = !inString;
+				continue;
+			}
+			if (inString) continue;
 			if (char === "{") {
 				if (objNestingCounter === 0) lastValidIndex = i - 1;
 				objNestingCounter++;
-			}
-			if (char === "}") objNestingCounter--;
+			} else if (char === "}") objNestingCounter--;
 		}
 		let validJSONStr = jsonStr;
 		if (objNestingCounter !== 0) validJSONStr = jsonStr.slice(0, lastValidIndex + 1);
