@@ -2,7 +2,7 @@
   "name": "bufferednetworkrequest",
   "type": "module",
   "version": "1.0.6",
-  "description": "Parse JSON and text requests as they arrive.",
+  "description": "Stream parsed JSON and text requests as they arrive.",
   "author": "benhatsor",
   "license": "MIT",
   "homepage": "https://github.com/benhatsor/BufferedNetworkRequest#readme",
