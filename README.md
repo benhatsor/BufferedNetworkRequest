@@ -1,6 +1,6 @@
 # BufferedNetworkRequest
 
-Stream parsed JSON and text requests as they arrive. **~30% faster** [First Contentful Paint][1] on slow 3G.
+Stream parsed JSON objects and text requests as they arrive. **~30% faster** [First Contentful Paint][1] on 3G.
 
 [![NPM version](https://img.shields.io/npm/v/bufferednetworkrequest)](https://www.npmjs.com/package/bufferednetworkrequest) [![Minified size](https://img.shields.io/github/size/benhatsor/BufferedNetworkRequest/dist/index.min.js)](/dist/index.min.js) [![License](https://img.shields.io/github/license/benhatsor/BufferedNetworkRequest.svg)](/LICENSE) 
 
