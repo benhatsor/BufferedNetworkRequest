@@ -1,7 +1,7 @@
 {
   "name": "bufferednetworkrequest",
   "type": "module",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Stream parsed JSON objects and text requests as they arrive.",
   "author": "benhatsor",
   "license": "MIT",
