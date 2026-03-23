@@ -1,7 +1,7 @@
 {
   "name": "bufferednetworkrequest",
   "type": "module",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Make your interfaces render ~30% faster on 3G with streams and smart JSON parsing.",
   "author": "benhatsor",
   "license": "MIT",
