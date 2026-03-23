@@ -1,12 +1,10 @@
 
-export type ValidJSONObjects = object[]
-
 /**
- * Gets valid objects in invalid JSON.
+ * Extracts valid objects from incomplete JSON.
  */
-class InvalidJSONParser {
+export default new class IncompleteJSONParser {
 
-    parse(jsonStr: string): ValidJSONObjects {
+    parse(jsonStr: string): object[] {
 
         let objNestingCounter = 0
         let lastValidIndex = 0
@@ -42,7 +40,7 @@ class InvalidJSONParser {
 
                     // save the last valid index
                     // so we'll be able to revert back to it
-                    // if this object is invalid
+                    // if this object is incomplete
                     lastValidIndex = i - 1
 
                 }
@@ -90,25 +88,23 @@ class InvalidJSONParser {
         }
 
 
-        let validJSONObjects: ValidJSONObjects = []
+        let completedJSONObjects: object[] = []
 
         if (validJSONStr) {
 
-            validJSONObjects = JSON.parse(validJSONStr)
+            completedJSONObjects = JSON.parse(validJSONStr)
 
             // if got an object, wrap it in an array
-            if (!Array.isArray(validJSONObjects)) {
+            if (!Array.isArray(completedJSONObjects)) {
 
-                validJSONObjects = [validJSONObjects]
+                completedJSONObjects = [completedJSONObjects]
 
             }
 
         }
 
-        return validJSONObjects
+        return completedJSONObjects
 
     }
 
 }
-
-export default new InvalidJSONParser()

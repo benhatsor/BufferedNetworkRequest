@@ -30,25 +30,23 @@ declare class TextStream extends TextStreamInterface<string> {
   protected processChunk(chunk: string): string;
 }
 //#endregion
-//#region src/InvalidJSONParser.d.ts
-type ValidJSONObjects = object[];
-/**
- * Gets valid objects in invalid JSON.
- */
-declare class InvalidJSONParser {
-  parse(jsonStr: string): ValidJSONObjects;
-}
-declare const _default: InvalidJSONParser;
-//#endregion
 //#region src/JSONObjectStream.d.ts
 /**
- * Stream JSON objects in chunks from a `Response`.
+ * Stream completed JSON objects in chunks from a `Response`.
  */
-declare class JSONObjectStream extends TextStreamInterface<ValidJSONObjects> {
+declare class JSONObjectStream extends TextStreamInterface<object[]> {
   private fullJSONStr;
-  private lastValidJSONObjectCount;
+  private lastCompletedJSONObjectCount;
   protected processChunk(chunk: string): object[] | null;
 }
 //#endregion
-export { _default as InvalidJSONParser, JSONObjectStream, TextStream, TextStreamInterface, ValidJSONObjects };
+//#region src/IncompleteJSONParser.d.ts
+/**
+ * Extracts valid objects from incomplete JSON.
+ */
+declare const _default: {
+  parse(jsonStr: string): object[];
+};
+//#endregion
+export { _default as IncompleteJSONParser, JSONObjectStream, TextStream, TextStreamInterface };
 //# sourceMappingURL=index.d.ts.map

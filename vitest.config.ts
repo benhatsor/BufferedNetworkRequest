@@ -3,7 +3,7 @@ import { playwright } from '@vitest/browser-playwright'
 
 export default defineConfig({
   test: {
-    include: ['tests/index.test.ts'],
+    include: ['tests/**.test.ts'],
     projects: [
       {
         test: {

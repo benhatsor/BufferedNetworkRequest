@@ -1,5 +1,5 @@
 
-// Helper: create a ReadableStream from string chunks
+// Helper: creates a ReadableStream from string chunks
 export function createReadableStream(chunks: string[]) {
   const encoder = new TextEncoder()
   return new ReadableStream({

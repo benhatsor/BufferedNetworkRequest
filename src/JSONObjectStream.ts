@@ -1,37 +1,37 @@
 
 import { TextStreamInterface } from './TextStream'
-import InvalidJSONParser, { type ValidJSONObjects } from './InvalidJSONParser'
+import IncompleteJSONParser from './IncompleteJSONParser'
 
 /**
- * Stream JSON objects in chunks from a `Response`.
+ * Stream completed JSON objects in chunks from a `Response`.
  */
-export class JSONObjectStream extends TextStreamInterface<ValidJSONObjects> {
+export class JSONObjectStream extends TextStreamInterface<object[]> {
 
     private fullJSONStr = ''
-    private lastValidJSONObjectCount = 0
+    private lastCompletedJSONObjectCount = 0
 
     protected processChunk(chunk: string) {
 
         this.fullJSONStr += chunk
 
-        // get valid JSON objects in full JSON string
-        const validJSONObjects = InvalidJSONParser.parse(
+        // get completed JSON objects in full JSON string
+        const completedJSONObjects = IncompleteJSONParser.parse(
             this.fullJSONStr
         )
 
-        // remove JSON objects we've already validated
-        const newValidJSONObjects = validJSONObjects.slice(
-            this.lastValidJSONObjectCount
+        // remove JSON objects we've already returned
+        const newCompletedJSONObjects = completedJSONObjects.slice(
+            this.lastCompletedJSONObjectCount
         )
 
-        // if there are no new valid JSON objects, don't send an update
-        if (newValidJSONObjects.length === 0) {
+        // if there are no new completed JSON objects, don't send an update
+        if (newCompletedJSONObjects.length === 0) {
             return null
         }
 
-        this.lastValidJSONObjectCount += newValidJSONObjects.length
+        this.lastCompletedJSONObjectCount += newCompletedJSONObjects.length
 
-        return newValidJSONObjects
+        return newCompletedJSONObjects
 
     }
 

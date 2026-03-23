@@ -45,11 +45,11 @@ var TextStream = class extends TextStreamInterface {
 	}
 };
 //#endregion
-//#region src/InvalidJSONParser.ts
+//#region src/IncompleteJSONParser.ts
 /**
-* Gets valid objects in invalid JSON.
+* Extracts valid objects from incomplete JSON.
 */
-var InvalidJSONParser = class {
+var IncompleteJSONParser_default = new class IncompleteJSONParser {
 	parse(jsonStr) {
 		let objNestingCounter = 0;
 		let lastValidIndex = 0;
@@ -77,32 +77,31 @@ var InvalidJSONParser = class {
 			if (validJSONStr.endsWith(",")) validJSONStr = validJSONStr.slice(0, -1);
 			validJSONStr += "]";
 		}
-		let validJSONObjects = [];
+		let completedJSONObjects = [];
 		if (validJSONStr) {
-			validJSONObjects = JSON.parse(validJSONStr);
-			if (!Array.isArray(validJSONObjects)) validJSONObjects = [validJSONObjects];
+			completedJSONObjects = JSON.parse(validJSONStr);
+			if (!Array.isArray(completedJSONObjects)) completedJSONObjects = [completedJSONObjects];
 		}
-		return validJSONObjects;
+		return completedJSONObjects;
 	}
-};
-var InvalidJSONParser_default = new InvalidJSONParser();
+}();
 //#endregion
 //#region src/JSONObjectStream.ts
 /**
-* Stream JSON objects in chunks from a `Response`.
+* Stream completed JSON objects in chunks from a `Response`.
 */
 var JSONObjectStream = class extends TextStreamInterface {
 	fullJSONStr = "";
-	lastValidJSONObjectCount = 0;
+	lastCompletedJSONObjectCount = 0;
 	processChunk(chunk) {
 		this.fullJSONStr += chunk;
-		const newValidJSONObjects = InvalidJSONParser_default.parse(this.fullJSONStr).slice(this.lastValidJSONObjectCount);
-		if (newValidJSONObjects.length === 0) return null;
-		this.lastValidJSONObjectCount += newValidJSONObjects.length;
-		return newValidJSONObjects;
+		const newCompletedJSONObjects = IncompleteJSONParser_default.parse(this.fullJSONStr).slice(this.lastCompletedJSONObjectCount);
+		if (newCompletedJSONObjects.length === 0) return null;
+		this.lastCompletedJSONObjectCount += newCompletedJSONObjects.length;
+		return newCompletedJSONObjects;
 	}
 };
 //#endregion
-export { InvalidJSONParser_default as InvalidJSONParser, JSONObjectStream, TextStream, TextStreamInterface };
+export { IncompleteJSONParser_default as IncompleteJSONParser, JSONObjectStream, TextStream, TextStreamInterface };
 
 //# sourceMappingURL=index.js.map
