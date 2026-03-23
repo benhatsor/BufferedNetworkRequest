@@ -1,11 +1,13 @@
 # BufferedNetworkRequest
 
-Stream parsed JSON objects and text requests as they arrive. **~30% faster** [First Contentful Paint][1] on 3G.
+Make your interface render ~30% faster on 3G with streams and smart JSON parsing.
 
 [![NPM version](https://img.shields.io/npm/v/bufferednetworkrequest)](https://www.npmjs.com/package/bufferednetworkrequest) [![Minified size](https://img.shields.io/github/size/benhatsor/BufferedNetworkRequest/dist/index.min.js)](/dist/index.min.js) [![License](https://img.shields.io/github/license/benhatsor/BufferedNetworkRequest.svg)](/LICENSE) 
 
-- [Demo](https://cde.run/benhatsor/BufferedNetworkRequest/demos/demo/index.html)
-- [Benchmark Demo](https://cde.run/benhatsor/BufferedNetworkRequest/demos/bench/index.html)
+- Stream partially received JSON objects and text requests as they arrive
+- **~30% faster** [First Contentful Paint][1] on 3G
+
+[Demo](https://cde.run/benhatsor/BufferedNetworkRequest/demos/demo/index.html) | [Benchmark](https://cde.run/benhatsor/BufferedNetworkRequest/demos/bench/index.html)
 
 ## Installation
 
@@ -71,8 +73,8 @@ console.log(text)
 The library uses the [Web Streams API][2]. `TextStreamInterface<ChunkType>` is an abstract base class that pipes a `Response.body` through a `TextDecoderStream` and exposes an async iterator. Subclasses implement `processChunk()` to transform each text chunk:
 
 - [**TextStream**](src/TextStream.ts) — Returns raw text chunks as-is
-- [**JSONObjectStream**](src/JSONObjectStream.ts) — Accumulates chunks into a JSON string, uses `InvalidJSONParser` to extract complete objects, and yields only newly-completed objects (no duplicates across iterations)
-- [**InvalidJSONParser**](src/InvalidJSONParser.ts) — Parses incomplete/truncated JSON by tracking brace nesting to find the last fully-closed object, and auto-closing unclosed top-level arrays
+- [**JSONObjectStream**](src/JSONObjectStream.ts) — Accumulates chunks into a JSON string, uses `InvalidJSONParser` to extract complete objects as they come in, and yields only newly-completed objects (no duplicates across iterations)
+- [**InvalidJSONParser**](src/InvalidJSONParser.ts) — Extracts valid JSON from incomplete chunks by tracking brace nesting to find the last fully-closed object, and auto-closing unclosed top-level arrays
 
 ## Developing
 
