@@ -4,7 +4,8 @@ Make your interface render ~30% faster on 3G with streams and smart JSON parsing
 
 [![NPM version](https://img.shields.io/npm/v/bufferednetworkrequest)](https://www.npmjs.com/package/bufferednetworkrequest) [![Minified size](https://img.shields.io/github/size/benhatsor/BufferedNetworkRequest/dist/index.min.js)](/dist/index.min.js) [![License](https://img.shields.io/github/license/benhatsor/BufferedNetworkRequest.svg)](/LICENSE) 
 
-- Stream partially received JSON objects and text requests as they arrive
+- Stream network requests as they arrive
+- Extract valid JSON objects from incomplete chunks
 - **~30% faster** [First Contentful Paint][1] on 3G
 
 [Demo](https://cde.run/benhatsor/BufferedNetworkRequest/demos/demo/index.html) | [Benchmark](https://cde.run/benhatsor/BufferedNetworkRequest/demos/bench/index.html)
