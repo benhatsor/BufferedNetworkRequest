@@ -1,105 +1,112 @@
 
 import { JSONObjectStream } from 'bufferednetworkrequest'
+import { throttleProfiles, throttleStream } from './throttle'
+import * as ui from './ui'
 
 
-const statusEl = document.querySelector('.status')!
+let running = false
+let abortController: AbortController | null = null
+
+ui.onRun(run)
+ui.onCancel(() => abortController?.abort())
+ui.onClear(ui.clear)
 
 
-const startTime = performance.now()
-let prevTime = startTime
-let firstLoadTime: number | null = null
+async function run() {
 
+    if (running) return
+    running = true
+    ui.setRunning(true)
+    ui.clear()
 
-const response = await fetch('https://jsonplaceholder.typicode.com/photos', {
-    cache: 'no-store'
-})
+    abortController = new AbortController()
+    const { signal } = abortController
+    const profile = throttleProfiles[ui.getSelectedProfile()]
 
-if (!response.ok || !response.body) {
-    statusEl.textContent = `An error occured while fetching the response.`
-    throw Error
+    ui.log('h5', 'Fetching...')
+
+    try {
+
+        const response = await fetch('https://jsonplaceholder.typicode.com/photos', {
+            cache: 'no-store',
+            signal
+        })
+
+        if (!response.ok || !response.body) {
+            ui.log('h3', 'An error occured while fetching the response.')
+            return
+        }
+
+        const shouldThrottle = profile.latencyMs > 0 || isFinite(profile.bytesPerSecond)
+        const body = shouldThrottle ?
+            throttleStream(response.body, profile) :
+            response.body
+
+        const results = await streamObjects(body, signal)
+        showResults(results)
+
+        console.info('[done] response', response)
+
+    } catch (e) {
+
+        if (e instanceof DOMException && e.name === 'AbortError') {
+            ui.log('h3', 'Cancelled.')
+        } else {
+            throw e
+        }
+
+    } finally {
+        running = false
+        ui.setRunning(false)
+    }
+
 }
 
+async function streamObjects(body: NonNullable<Response['body']>, signal: AbortSignal) {
 
-const stream = new JSONObjectStream(response.body)
+    const startTime = performance.now()
+    let prevTime = startTime
+    let firstLoadTime: number | null = null
+    let totalObjects = 0
 
-let respObjects: object[] = []
+    const stream = new JSONObjectStream(body)
 
-for await (const objects of stream) {
+    for await (const objects of stream) {
 
-    respObjects.push(...objects)
+        signal.throwIfAborted()
 
-    const objectElements = objects.map(object => {
+        totalObjects += objects.length
 
-        const el = document.createElement('code')
-        el.textContent = JSON.stringify(object)
+        for (const object of objects) {
+            ui.log('code', JSON.stringify(object))
+        }
 
-        return el
+        const now = performance.now()
+        ui.log('h2', `loaded ${objects.length} in +${ui.round(now - prevTime, 2)}ms`)
+        ui.scrollToBottom()
 
-    })
+        prevTime = now
+        firstLoadTime ??= now
 
-    statusEl.append(...objectElements)
+    }
 
-
-    const currTime = performance.now()
-    const deltaTime = currTime - prevTime
-
-    prevTime = currTime
-
-    firstLoadTime ??= currTime
-
-
-    const headingEl = document.createElement('h2')
-    headingEl.textContent = `loaded ${objects.length} in +${round(deltaTime, 2)}ms`
-
-    statusEl.appendChild(headingEl)
-
-
-    scrollToBottom()
+    return { startTime, firstLoadTime: firstLoadTime!, totalObjects }
 
 }
 
+function showResults({ startTime, firstLoadTime, totalObjects }: {
+    startTime: number
+    firstLoadTime: number
+    totalObjects: number
+}) {
 
-const currTime = performance.now()
+    const endTime = performance.now()
+    const totalTime = endTime - startTime
+    const timeSaved = endTime - firstLoadTime
+    const improvement = ui.round((timeSaved / totalTime) * 100, 2)
 
-let totalRequestTime = currTime - startTime
-let timeSaved = currTime - firstLoadTime!
+    ui.log('h3', `done. (loaded ${totalObjects} objects)`)
+    ui.log('h1', `time saved: ${improvement}% (${ui.round(timeSaved / 1000, 2)}s of ${ui.round(totalTime / 1000, 2)}s)`)
+    ui.scrollToBottom()
 
-let improvementPercent = percentage(timeSaved, totalRequestTime)
-
-totalRequestTime = formatTime(totalRequestTime)
-timeSaved = formatTime(timeSaved)
-improvementPercent = round(improvementPercent, 2)
-
-const subHeadingEl = document.createElement('h3')
-subHeadingEl.textContent = `done. (loaded ${respObjects.length} objects)`
-
-const headingEl = document.createElement('h1')
-headingEl.textContent = `time saved: ${improvementPercent}% (${timeSaved}s of ${totalRequestTime}s)`
-
-statusEl.append(subHeadingEl, headingEl)
-
-scrollToBottom()
-
-
-console.info('[done] response', response)
-
-
-
-function formatTime(time: number) {
-    return round(time / 1000, 2)
-}
-
-function round(value: number, decimalPoints: number) {
-    const multiplier = Math.pow(10, decimalPoints || 0)
-    return Math.round(value * multiplier) / multiplier
-}
-
-function percentage(partialValue: number, totalValue: number) {
-    return (100 * partialValue) / totalValue
-}
-
-function scrollToBottom() {
-    document.body.scrollIntoView({
-        block: 'end'
-    })
 }

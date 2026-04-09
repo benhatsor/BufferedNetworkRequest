@@ -1,0 +1,53 @@
+
+const statusEl = document.querySelector('.status')!
+const throttleSelect = document.querySelector<HTMLSelectElement>('#throttle')!
+const runButton = document.querySelector<HTMLButtonElement>('#run')!
+const cancelButton = document.querySelector<HTMLButtonElement>('#cancel')!
+const clearButton = document.querySelector<HTMLButtonElement>('#clear')!
+
+
+export function getSelectedProfile() {
+    return throttleSelect.value
+}
+
+
+export function clear() {
+    statusEl.innerHTML = ''
+}
+
+
+export function setRunning(value: boolean) {
+    runButton.disabled = value
+    cancelButton.disabled = !value
+}
+
+
+export function onRun(handler: () => void) {
+    runButton.addEventListener('click', handler)
+}
+
+export function onCancel(handler: () => void) {
+    cancelButton.addEventListener('click', handler)
+}
+
+export function onClear(handler: () => void) {
+    clearButton.addEventListener('click', handler)
+}
+
+
+export function log(tag: string, text: string) {
+    const el = document.createElement(tag)
+    el.textContent = text
+    statusEl.appendChild(el)
+    return el
+}
+
+
+export function scrollToBottom() {
+    document.body.scrollIntoView({ block: 'end' })
+}
+
+export function round(value: number, decimals: number) {
+    const m = 10 ** decimals
+    return Math.round(value * m) / m
+}

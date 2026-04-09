@@ -1,0 +1,31 @@
+body {
+  font-family: system-ui;
+  margin: 0;
+}
+
+.controls {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding: 10px 8px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 1;
+}
+
+.controls select,
+.controls button {
+  font-size: 14px;
+  padding: 4px 10px;
+}
+
+.status {
+  margin: 8px;
+}
+
+.status code {
+  display: block;
+  margin: 10px;
+}

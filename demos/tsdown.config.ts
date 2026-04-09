@@ -14,6 +14,6 @@ function getDemoConfig(demoDir: string): UserConfig {
 }
 
 export default defineConfig([
-  getDemoConfig('demo'),
+  getDemoConfig('basic-demo'),
   getDemoConfig('bench')
 ])

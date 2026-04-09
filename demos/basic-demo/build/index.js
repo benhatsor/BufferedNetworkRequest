@@ -1,10 +1,10 @@
 import { JSONObjectStream } from "bufferednetworkrequest";
-//#region demo/index.ts
+//#region basic-demo/index.ts
 const statusEl = document.querySelector(".status");
 const response = await fetch("https://jsonplaceholder.typicode.com/photos", { cache: "no-store" });
 if (!response.ok || !response.body) {
 	statusEl.textContent = `An error occured while fetching the response.`;
-	throw Error;
+	throw new Error();
 }
 const stream = new JSONObjectStream(response.body);
 for await (const objects of stream) {

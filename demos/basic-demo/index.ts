@@ -11,7 +11,7 @@ const response = await fetch('https://jsonplaceholder.typicode.com/photos', {
 
 if (!response.ok || !response.body) {
     statusEl.textContent = `An error occured while fetching the response.`
-    throw Error
+    throw new Error()
 }
 
 

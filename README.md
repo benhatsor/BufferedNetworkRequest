@@ -8,7 +8,7 @@ Make your interfaces render ~30% faster on 3G using streams and partial JSON par
 - Extract valid JSON objects from incomplete chunks
 - **~30% faster** [First Contentful Paint][1] on 3G
 
-[Demo](https://cde.run/benhatsor/BufferedNetworkRequest/demos/demo/index.html) | [Benchmark](https://cde.run/benhatsor/BufferedNetworkRequest/demos/bench/index.html)
+[Benchmark](https://cde.run/benhatsor/BufferedNetworkRequest/demos/bench/index.html) | [Basic Demo](https://cde.run/benhatsor/BufferedNetworkRequest/demos/basic-demo/index.html)
 
 ## Installation
 
@@ -32,8 +32,8 @@ import { JSONObjectStream } from 'bufferednetworkrequest'
 
 const response = await fetch('https://jsonplaceholder.typicode.com/photos')
 
-if (!response.ok) throw Error(`Request failed: Code ${response.status}`)
-if (!response.body) throw Error(`Response was empty.`)
+if (!response.ok) throw new Error(`Request failed: Code ${response.status}`)
+if (!response.body) throw new Error(`Response was empty.`)
 
 const stream = new JSONObjectStream(response.body)
 
@@ -54,8 +54,8 @@ import { TextStream } from 'bufferednetworkrequest'
 
 const response = await fetch(url)
 
-if (!response.ok) throw Error(`Request failed: Code ${response.status}`)
-if (!response.body) throw Error(`Response was empty.`)
+if (!response.ok) throw new Error(`Request failed: Code ${response.status}`)
+if (!response.body) throw new Error(`Response was empty.`)
 
 const stream = new TextStream(response.body)
 

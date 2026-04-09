@@ -2,27 +2,30 @@
 <html>
   <head>
 
-    <style>
-    body {
-      font-family: system-ui;
-    }
-
-    .status code {
-      display: block;
-      margin: 10px;
-    }
-    </style>
-
     <script type="importmap">
     { "imports": { "bufferednetworkrequest": "../../dist/index.js" } }
     </script>
-    
+
     <script src="build/index.js" type="module"></script>
+
+    <link rel="stylesheet" href="style.css">
 
   </head>
   <body>
 
-    <div class="status"><h5>Fetching...</h5></div>
+    <div class="controls">
+      <select id="throttle">
+        <option value="none">No throttling</option>
+        <option value="fast4g">Fast 4G (9 Mbps, 60ms RTT)</option>
+        <option value="slow4g" selected>Slow 4G (~1.6 Mbps, 150ms RTT)</option>
+        <option value="3g">3G (~500 Kbps, 400ms RTT)</option>
+      </select>
+      <button id="run">Run</button>
+      <button id="cancel" disabled>Cancel</button>
+      <button id="clear">Clear</button>
+    </div>
+
+    <div class="status"></div>
 
   </body>
 </html>
