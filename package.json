@@ -2,7 +2,7 @@
   "name": "bufferednetworkrequest",
   "type": "module",
   "version": "1.0.9",
-  "description": "Make your interfaces render ~30% faster on 3G with streams and smart JSON parsing.",
+  "description": "Make your interfaces render ~30% faster on 3G using streams and partial JSON parsing.",
   "author": "benhatsor",
   "license": "MIT",
   "homepage": "https://github.com/benhatsor/BufferedNetworkRequest#readme",
@@ -47,9 +47,9 @@
     "demos:dev": "tsdown --config demos/tsdown.config.ts --watch"
   },
   "devDependencies": {
-    "@vitest/browser-playwright": "^4.1.0",
-    "tsdown": "^0.21.2",
+    "@vitest/browser-playwright": "^4.1.4",
+    "tsdown": "^0.21.7",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.4"
   }
 }

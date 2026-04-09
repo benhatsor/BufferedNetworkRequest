@@ -1,6 +1,6 @@
 # BufferedNetworkRequest
 
-Make your interfaces render ~30% faster on 3G with streams and smart JSON parsing.
+Make your interfaces render ~30% faster on 3G using streams and partial JSON parsing.
 
 [![NPM version](https://img.shields.io/npm/v/bufferednetworkrequest)](https://www.npmjs.com/package/bufferednetworkrequest) [![Minified size](https://img.shields.io/github/size/benhatsor/BufferedNetworkRequest/dist/index.min.js)](/dist/index.min.js) [![License](https://img.shields.io/github/license/benhatsor/BufferedNetworkRequest.svg)](/LICENSE) 
 
