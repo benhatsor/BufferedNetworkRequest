@@ -9,7 +9,6 @@ let abortController: AbortController | null = null
 
 ui.onRun(run)
 ui.onCancel(() => abortController?.abort())
-ui.onClear(ui.clear)
 
 
 async function run() {
@@ -51,6 +50,7 @@ async function run() {
 
         if (e instanceof DOMException && e.name === 'AbortError') {
             ui.log('h3', 'Cancelled.')
+            ui.scrollToBottom()
         } else {
             throw e
         }

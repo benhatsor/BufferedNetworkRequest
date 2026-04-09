@@ -45,7 +45,6 @@ const statusEl = document.querySelector(".status");
 const throttleSelect = document.querySelector("#throttle");
 const runButton = document.querySelector("#run");
 const cancelButton = document.querySelector("#cancel");
-const clearButton = document.querySelector("#clear");
 function getSelectedProfile() {
 	return throttleSelect.value;
 }
@@ -61,9 +60,6 @@ function onRun(handler) {
 }
 function onCancel(handler) {
 	cancelButton.addEventListener("click", handler);
-}
-function onClear(handler) {
-	clearButton.addEventListener("click", handler);
 }
 function log(tag, text) {
 	const el = document.createElement(tag);
@@ -84,7 +80,6 @@ let running = false;
 let abortController = null;
 onRun(run);
 onCancel(() => abortController?.abort());
-onClear(clear);
 async function run() {
 	if (running) return;
 	running = true;
@@ -106,8 +101,10 @@ async function run() {
 		showResults(await streamObjects(profile.latencyMs > 0 || isFinite(profile.bytesPerSecond) ? throttleStream(response.body, profile) : response.body, signal));
 		console.info("[done] response", response);
 	} catch (e) {
-		if (e instanceof DOMException && e.name === "AbortError") log("h3", "Cancelled.");
-		else throw e;
+		if (e instanceof DOMException && e.name === "AbortError") {
+			log("h3", "Cancelled.");
+			scrollToBottom();
+		} else throw e;
 	} finally {
 		running = false;
 		setRunning(false);

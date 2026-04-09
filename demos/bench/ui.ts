@@ -3,7 +3,6 @@ const statusEl = document.querySelector('.status')!
 const throttleSelect = document.querySelector<HTMLSelectElement>('#throttle')!
 const runButton = document.querySelector<HTMLButtonElement>('#run')!
 const cancelButton = document.querySelector<HTMLButtonElement>('#cancel')!
-const clearButton = document.querySelector<HTMLButtonElement>('#clear')!
 
 
 export function getSelectedProfile() {
@@ -28,10 +27,6 @@ export function onRun(handler: () => void) {
 
 export function onCancel(handler: () => void) {
     cancelButton.addEventListener('click', handler)
-}
-
-export function onClear(handler: () => void) {
-    clearButton.addEventListener('click', handler)
 }
 
 
