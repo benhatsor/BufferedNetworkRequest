@@ -18,6 +18,7 @@ body {
 .controls select,
 .controls button {
   font-size: 14px;
+  font-family: inherit;
   padding: 4px 10px;
 }
 
